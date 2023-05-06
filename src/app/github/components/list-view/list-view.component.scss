@@ -6,6 +6,7 @@ ul {
 .commits {
   &__list {
     list-style: outside none none;
+    padding: 0;
   }
 
   &__item {

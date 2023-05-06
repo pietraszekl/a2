@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { GithubService } from '../../services/github.service';
 import { Commit } from '../../interfaces/github.interfaces';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-list-view',
@@ -8,12 +9,6 @@ import { Commit } from '../../interfaces/github.interfaces';
   styleUrls: ['./list-view.component.scss'],
 })
 export class ListViewComponent {
-  commits: Commit[] = [];
+  commits$: Observable<Commit[]> = this.githubService.getAllCommits();
   constructor(private githubService: GithubService) {}
-
-  ngOnInit(): void {
-    this.githubService.getCommits().subscribe((data) => {
-      this.commits = data;
-    });
-  }
 }

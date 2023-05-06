@@ -1,8 +1,10 @@
-<div class="commits">
-  <ul class="commits__list">
-    <li class="commits__item" *ngFor="let commit of commits">
-      <h2>Message: {{ commit.commit.message }}</h2>
-      Date: {{ commit.commit.committer.date | date : "MM/dd/yy" }}
-    </li>
-  </ul>
-</div>
+<ng-container>
+  <app-date-picker />
+  <div class="commits" *ngIf="commits$ | async as commitsList">
+    <ul class="commits__list">
+      <li class="commits__item" *ngFor="let commit of commitsList">
+        <app-list-view-item [commit]="commit"></app-list-view-item>
+      </li>
+    </ul>
+  </div>
+</ng-container>

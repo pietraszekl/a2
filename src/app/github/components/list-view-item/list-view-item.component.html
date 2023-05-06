@@ -1,0 +1,6 @@
+<ng-container>
+  <a [routerLink]="['/', commit.sha]">
+    <h2>{{ commit.commit.message }}</h2>
+    {{ commit.commit.committer.date | date : "dd/MM/yyyy" }}
+  </a>
+</ng-container>

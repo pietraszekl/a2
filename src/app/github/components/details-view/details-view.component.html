@@ -1,1 +1,6 @@
-<p>details-view works!</p>
+<div class="commit-details" *ngIf="commit$ | async as commit">
+  <h1>{{ commit.commit.message }}</h1>
+  <div>{{ commit.commit.committer.name }}</div>
+  <div>{{ commit.commit.committer.date | date : "dd/MM/yyyy" }}</div>
+  <a [href]="commit.html_url"> Check details on GithHub</a>
+</div>
