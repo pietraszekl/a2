@@ -1,0 +1,22 @@
+li,
+ol,
+ul {
+}
+
+.commits {
+  &__list {
+    list-style: outside none none;
+  }
+
+  &__item {
+    background-color: #f3f3f3;
+    border: 1px solid gray;
+    padding: 1rem 2rem;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    &:hover {
+      background-color: lightgray;
+    }
+  }
+}

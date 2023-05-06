@@ -1,1 +1,8 @@
-<p>list-view works!</p>
+<div class="commits">
+  <ul class="commits__list">
+    <li class="commits__item" *ngFor="let commit of commits">
+      <h2>Message: {{ commit.commit.message }}</h2>
+      Date: {{ commit.commit.committer.date | date : "MM/dd/yy" }}
+    </li>
+  </ul>
+</div>
