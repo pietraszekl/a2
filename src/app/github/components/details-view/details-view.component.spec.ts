@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DetailsViewComponent } from './details-view.component';
+import { RouterModule} from "@angular/router";
+import {HttpClientModule} from "@angular/common/http";
 
 describe('DetailsViewComponent', () => {
   let component: DetailsViewComponent;
@@ -8,7 +10,11 @@ describe('DetailsViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DetailsViewComponent ]
+      declarations: [ DetailsViewComponent ],
+      imports: [
+        HttpClientModule,
+        RouterModule.forRoot([]),
+      ],
     })
     .compileComponents();
 

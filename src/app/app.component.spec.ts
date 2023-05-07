@@ -23,13 +23,13 @@ describe('AppComponent', () => {
   it(`should have as title 'Lukasz Pietraszek - Assignment 2'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('a2');
+    expect(app.title).toEqual('Lukasz Pietraszek - Assignment 2');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('a2 app is running!');
+    expect(compiled.querySelector('.app-title')?.textContent).toContain('GitHub Lookup');
   });
 });
