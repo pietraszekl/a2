@@ -10,17 +10,6 @@ const mockEvent = {
     value: '2023-01-05'
   } as HTMLInputElement,
 }
-const mockCommit: Commit = {
-  html_url: 'https://fake.github.com/123',
-  sha: '1111',
-  commit: {
-    message: 'fake message',
-    committer: {
-      name: "Lukasz Pietraszek",
-      date: '2023-05-04'
-    }
-  }
-}
 
 describe('GithubService', () => {
   let service: GithubService;
