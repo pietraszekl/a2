@@ -1,10 +1,12 @@
 <ng-container>
   <app-date-picker />
-  <div class="commits">
-    <ul class="commits__list">
+  <div class="commits" >
+    <ul class="commits__list" *ngIf="commits.length; else elseBlock">
       <li class="commits__item" *ngFor="let commit of commits">
         <app-list-view-item [commit]="commit"></app-list-view-item>
       </li>
     </ul>
+
   </div>
 </ng-container>
+<ng-template #elseBlock><div class="commits__no-results">No results for searched date range</div>.</ng-template>

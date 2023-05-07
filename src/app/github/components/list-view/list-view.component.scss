@@ -21,4 +21,9 @@ ul {
       background-color: lightgray;
     }
   }
+
+  &__no-results {
+    margin-top: 2rem;
+    color: indianred;
+  }
 }

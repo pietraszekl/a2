@@ -20,7 +20,7 @@ export class GithubService {
     this.getAllCommits(initialDate);
   }
 
-  setFromDate(date: Date) {
+  setFromDate(date: Date):void {
     if (date) {
       this.getAllCommits(date);
     }

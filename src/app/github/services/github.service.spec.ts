@@ -1,7 +1,26 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { GithubService } from './github.service';
+import {GithubService} from './github.service';
 import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {Commit} from "../interfaces/github.interfaces";
+
+
+const mockEvent = {
+  target: {
+    value: '2023-01-05'
+  } as HTMLInputElement,
+}
+const mockCommit: Commit = {
+  html_url: 'https://fake.github.com/123',
+  sha: '1111',
+  commit: {
+    message: 'fake message',
+    committer: {
+      name: "Lukasz Pietraszek",
+      date: '2023-05-04'
+    }
+  }
+}
 
 describe('GithubService', () => {
   let service: GithubService;
@@ -18,4 +37,16 @@ describe('GithubService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  describe('setFromDate', () => {
+    it("should call getAllCommits", () => {
+      const date = new Date(mockEvent.target.value)
+      spyOn(service, 'setFromDate').and.callThrough()
+      spyOn(service, 'getAllCommits');
+
+      service.setFromDate(date)
+      expect(service.getAllCommits).toHaveBeenCalledWith(date)
+    })
+  })
+
 });
