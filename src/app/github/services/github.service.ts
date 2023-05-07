@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {BehaviorSubject, Observable, share, shareReplay} from 'rxjs';
+import {BehaviorSubject, Observable, shareReplay} from 'rxjs';
 import {Commit} from '../interfaces/github.interfaces';
 
 const API_URL = 'https://api.github.com/repos/angular/angular/commits';
