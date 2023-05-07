@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { Commit } from '../../interfaces/github.interfaces';
+import {Component, Input} from '@angular/core';
+import {Commit} from '../../interfaces/github.interfaces';
 
 @Component({
   selector: 'app-list-view-item',

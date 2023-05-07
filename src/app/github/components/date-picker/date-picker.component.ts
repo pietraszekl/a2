@@ -1,10 +1,19 @@
-import { Component } from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {GithubService} from '../../services/github.service';
 
 @Component({
   selector: 'app-date-picker',
   templateUrl: './date-picker.component.html',
-  styleUrls: ['./date-picker.component.scss']
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DatePickerComponent {
+  constructor(private githubService: GithubService) {
+  }
 
+  handleDateChange(event: Event) {
+    const date = (event.target as HTMLInputElement).value;
+    const formattedDate = new Date(date);
+
+    this.githubService.setFromDate(formattedDate);
+  }
 }

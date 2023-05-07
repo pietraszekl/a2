@@ -1,2 +1,8 @@
-<label>show commits from:</label>
-<input type="date" label="date" title="date" />
+<ng-container>
+  <label>Show commits from:</label>
+  <input
+    (change)="handleDateChange($event)"
+    title="date"
+    type="date"
+  />
+</ng-container>

@@ -1,8 +1,8 @@
 <ng-container>
   <app-date-picker />
-  <div class="commits" *ngIf="commits$ | async as commitsList">
+  <div class="commits">
     <ul class="commits__list">
-      <li class="commits__item" *ngFor="let commit of commitsList">
+      <li class="commits__item" *ngFor="let commit of commits">
         <app-list-view-item [commit]="commit"></app-list-view-item>
       </li>
     </ul>

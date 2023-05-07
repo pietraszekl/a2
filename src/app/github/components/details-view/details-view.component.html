@@ -1,6 +1,6 @@
-<div class="commit-details" *ngIf="commit$ | async as commit">
+<div *ngIf="commit$ | async as commit" class="commit-details">
   <h1>{{ commit.commit.message }}</h1>
   <div>{{ commit.commit.committer.name }}</div>
   <div>{{ commit.commit.committer.date | date : "dd/MM/yyyy" }}</div>
-  <a [href]="commit.html_url"> Check details on GithHub</a>
+  <a [href]="commit.html_url">Check details on GitHub</a>
 </div>
