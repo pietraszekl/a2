@@ -10,7 +10,7 @@ export class DatePickerComponent {
   constructor(private githubService: GithubService) {
   }
 
-  handleDateChange(event: Event) {
+  handleDateChange(event: Partial<Event>):void {
     const date = (event.target as HTMLInputElement).value;
     const formattedDate = new Date(date);
 
