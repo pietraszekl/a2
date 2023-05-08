@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {ErrorHandler, Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {BehaviorSubject, catchError, Observable, of, retry, shareReplay, tap, throwError} from 'rxjs';
 import {Commit} from '../interfaces/github.interfaces';
@@ -56,7 +56,7 @@ export class GithubService {
     return date;
   }
 
-  private handleError(error: HttpErrorResponse) {
+   handleError(error: HttpErrorResponse):Observable<never> {
     console.error('An error occurred:', error);
     return throwError(() => new Error('Something bad happened; please try again later.'));
   };
