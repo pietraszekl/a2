@@ -9,6 +9,7 @@ import {Observable} from 'rxjs';
   templateUrl: './details-view.component.html'
 })
 export class DetailsViewComponent {
+  errorMsg$: Observable<string> = this.githubService.getError$
   private id = this.route.snapshot.params['id'];
   commit$: Observable<Commit> = this.githubService.getSingleCommit(this.id);
 

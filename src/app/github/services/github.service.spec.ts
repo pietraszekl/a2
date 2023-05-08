@@ -53,8 +53,9 @@ describe('GithubService', () => {
       const mockError = () => {
         return new Error('Something bad happened; please try again later.')
       }
-      spyOn(service, 'handleError').and.callThrough()
-      expect(service.handleError).toThrow(mockError);
+
+      spyOn(service, 'getSingleCommit').and.throwError(mockError())
+      expect(service.handleError).toThrowError()
     })
   })
 

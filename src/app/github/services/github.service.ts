@@ -1,6 +1,6 @@
 import {ErrorHandler, Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
-import {BehaviorSubject, catchError, Observable, of, retry, shareReplay, tap, throwError} from 'rxjs';
+import {BehaviorSubject, catchError, map, Observable, of, retry, shareReplay, tap, throwError} from 'rxjs';
 import {Commit} from '../interfaces/github.interfaces';
 
 const API_URL = 'https://api.github.com/repos/angular/angular/commits';
@@ -15,11 +15,10 @@ export class GithubService {
   public selectedCommits$ = this.commits$.asObservable();
   private loading$ = new BehaviorSubject<boolean>(false);
   public isLoading$ = this.loading$.asObservable();
+  private error$ = new BehaviorSubject<string>('');
+  public getError$ = this.error$.asObservable();
 
   constructor(private http: HttpClient) {
-    const date: Date = new Date();
-    const initialDate: Date = this.subtractMonths(date, 1);
-    this.getAllCommits(initialDate);
   }
 
   setFromDate(date: Date): void {
@@ -33,13 +32,14 @@ export class GithubService {
     this.retrieveCommitsByDate(date).subscribe((data) => {
       this.commits$.next(data);
       this.loading$.next(false)
+    }, (error) => {
+      this.handleError(error)
     });
   }
 
   getSingleCommit(id: string): Observable<Commit> {
     return this.http
-      .get<Commit>(`${API_URL}/${id}`)
-      .pipe(shareReplay(CACHE_SIZE));
+      .get<Commit>(`${API_URL}/${id}`).pipe(catchError(err => this.handleError(err)))
   }
 
   retrieveCommitsByDate(date: Date): Observable<Commit[]> {
@@ -48,7 +48,7 @@ export class GithubService {
 
     return this.http.get<Commit[]>(API_URL, {
       params,
-    }).pipe(retry(3), catchError(this.handleError));
+    })
   }
 
   subtractMonths(date: Date, months: number) {
@@ -56,8 +56,9 @@ export class GithubService {
     return date;
   }
 
-   handleError(error: HttpErrorResponse):Observable<never> {
-    console.error('An error occurred:', error);
+  handleError(error: HttpErrorResponse): Observable<never> {
+    this.loading$.next(false);
+    this.error$.next(error.message)
     return throwError(() => new Error('Something bad happened; please try again later.'));
   };
 }

@@ -21,9 +21,9 @@ ul {
       background-color: lightgray;
     }
   }
+}
 
-  &__no-results {
-    margin-top: 2rem;
-    color: indianred;
-  }
+.error-msg {
+  margin-top: 2rem;
+  color: indianred;
 }

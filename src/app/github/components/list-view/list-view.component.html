@@ -1,9 +1,11 @@
-<ng-container *ngIf="isLoading$ |async; else resultsBlock">
-  loading ...
+<ng-container>
+  <app-date-picker/>
+  <div *ngIf="isLoading$ | async; else resultsBlock">
+    loading ...
+  </div>
 </ng-container>
 
 <ng-template #resultsBlock>
-  <app-date-picker/>
   <div class="commits">
     <ul *ngIf="commits.length; else elseBlock" class="commits__list">
       <li *ngFor="let commit of commits" class="commits__item">
@@ -14,5 +16,13 @@
 </ng-template>
 
 <ng-template #elseBlock>
-  <div class="commits__no-results">No results for searched date range</div>
+  <div class="error-msg">
+    <div *ngIf="errorMsg$ | async as errorMsg; else noResults">
+      <p>{{errorMsg}}</p>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #noResults>
+  No results for searched date range
 </ng-template>
