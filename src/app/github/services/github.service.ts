@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
-import {BehaviorSubject, Observable, shareReplay} from 'rxjs';
+import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
+import {BehaviorSubject, catchError, Observable, of, retry, shareReplay, tap, throwError} from 'rxjs';
 import {Commit} from '../interfaces/github.interfaces';
 
 const API_URL = 'https://api.github.com/repos/angular/angular/commits';
@@ -13,6 +13,8 @@ const PER_PAGE_COUNT = 100;
 export class GithubService {
   private commits$ = new BehaviorSubject<Commit[]>([]);
   public selectedCommits$ = this.commits$.asObservable();
+  private loading$ = new BehaviorSubject<boolean>(false);
+  public isLoading$ = this.loading$.asObservable();
 
   constructor(private http: HttpClient) {
     const date: Date = new Date();
@@ -20,15 +22,17 @@ export class GithubService {
     this.getAllCommits(initialDate);
   }
 
-  setFromDate(date: Date):void {
+  setFromDate(date: Date): void {
     if (date) {
       this.getAllCommits(date);
     }
   }
 
   getAllCommits(date: Date): void {
+    this.loading$.next(true)
     this.retrieveCommitsByDate(date).subscribe((data) => {
       this.commits$.next(data);
+      this.loading$.next(false)
     });
   }
 
@@ -44,11 +48,16 @@ export class GithubService {
 
     return this.http.get<Commit[]>(API_URL, {
       params,
-    }).pipe(shareReplay(CACHE_SIZE));
+    }).pipe(retry(3), catchError(this.handleError));
   }
 
   subtractMonths(date: Date, months: number) {
     date.setMonth(date.getMonth() - months);
     return date;
   }
+
+  private handleError(error: HttpErrorResponse) {
+    console.error('An error occurred:', error);
+    return throwError(() => new Error('Something bad happened; please try again later.'));
+  };
 }

@@ -1,8 +1,6 @@
 import {TestBed} from '@angular/core/testing';
-
 import {GithubService} from './github.service';
 import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {Commit} from "../interfaces/github.interfaces";
 
 
 const mockEvent = {
@@ -29,6 +27,18 @@ describe('GithubService', () => {
 
   describe('setFromDate', () => {
     it("should call getAllCommits", () => {
+      const date = new Date(mockEvent.target.value)
+      spyOn(service, 'setFromDate').and.callThrough()
+      spyOn(service, 'getAllCommits');
+
+      service.setFromDate(date)
+      expect(service.getAllCommits).toHaveBeenCalledWith(date)
+    })
+  })
+
+
+  describe('retrieveCommitsByDate', () => {
+    it("to run have been called with date", () => {
       const date = new Date(mockEvent.target.value)
       spyOn(service, 'setFromDate').and.callThrough()
       spyOn(service, 'getAllCommits');
